@@ -1,18 +1,14 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const drawerWidth = 240;
 
@@ -25,6 +21,7 @@ interface Props {
 }
 
 export const Sidebar = ({ window }: Props) => {
+  const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -34,7 +31,9 @@ export const Sidebar = ({ window }: Props) => {
   const drawer = (
     <div>
       <Toolbar>
-        <Link to="/">Root</Link>
+        <span className="text-xl font-semibold">
+          {t('page.overview.main_title')}
+        </span>
       </Toolbar>
       <Divider />
       <List>
@@ -42,7 +41,9 @@ export const Sidebar = ({ window }: Props) => {
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <Link to={`/${text}`}>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={t(`page.overview.drawer.link.${text}_title`)}
+                />
               </Link>
             </ListItemButton>
           </ListItem>
@@ -56,29 +57,6 @@ export const Sidebar = ({ window }: Props) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -108,6 +86,7 @@ export const Sidebar = ({ window }: Props) => {
           sx={{
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': {
+              backgroundColor: '#EEF0FA',
               boxSizing: 'border-box',
               width: drawerWidth,
             },
